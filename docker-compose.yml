@@ -1,0 +1,28 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+  
+  fileservice:
+    image: https://github.com/catinapoke/go-microservice
+    ports:
+      - 3001:3001
+  
+  tgbot:
+    image: https://github.com/catinapoke/telegram-file-bot
+    depends_on:
+      - db
+      - fileservice
+
+      
