@@ -1,0 +1,10 @@
+github.com/catinapoke/go-microservice v0.0.0-20230505082809-68339e9f82ff h1:OSY4btJMcRqNx96n9kAqIL3CsaCb9g7F8T5PBV6wtCk=
+github.com/catinapoke/go-microservice v0.0.0-20230505082809-68339e9f82ff/go.mod h1:i8c2dsRBOyD293BCZ+8MppOqNseJ0V4YBeh57c4tr9k=
+github.com/catinapoke/go-microservice/catfacts v0.0.0-20230505082809-68339e9f82ff h1:MxCK+/Ki0VWYb9sg6vrPTYAYecUFBVn2YVkqrLCKaLQ=
+github.com/catinapoke/go-microservice/catfacts v0.0.0-20230505082809-68339e9f82ff/go.mod h1:ZvOQ/7QrhIxUJ9dyjXUzaOKoM8xsowwB8AKlHOEIHe0=
+github.com/catinapoke/go-microservice/catfacts v0.0.0-20230505162549-a47df0043a0e h1:1uXH/Beuc1HpT26dmq/OTZ3LSnsv6aYtt4sNOhbibYQ=
+github.com/catinapoke/go-microservice/catfacts v0.0.0-20230505162549-a47df0043a0e/go.mod h1:ZvOQ/7QrhIxUJ9dyjXUzaOKoM8xsowwB8AKlHOEIHe0=
+github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505082809-68339e9f82ff h1:vvowP+BXRsW89f+pZ9lo2LsECqpVDl0XBkkAqibx2es=
+github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505082809-68339e9f82ff/go.mod h1:CNfJvVxzeYAoIM4VWaFg5NOzZWtBCFVBwNHd5UaaEPg=
+github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505162549-a47df0043a0e h1:PwAdqiyATYoziP0ygmqPv2qkiEn9BuPOawpHJ/KKIj8=
+github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505162549-a47df0043a0e/go.mod h1:CNfJvVxzeYAoIM4VWaFg5NOzZWtBCFVBwNHd5UaaEPg=
