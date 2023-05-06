@@ -10,19 +10,19 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - 8888:8080
     depends_on:
       - db
-  
+
   fileservice:
-    image: https://github.com/catinapoke/go-microservice
+    build: https://github.com/catinapoke/go-microservice.git
+    image: go-microservice
     ports:
       - 3001:3001
-  
+
   tgbot:
-    image: https://github.com/catinapoke/telegram-file-bot
+    build: github.com/catinapoke/telegram-file-bot.git
+    image: telegram-file-bot
     depends_on:
       - db
       - fileservice
-
-      
