@@ -3,8 +3,14 @@ services:
   db:
     image: postgres
     restart: always
+    secrets:
+      - db-password
+      - db-name
+      - db-user
     environment:
-      POSTGRES_PASSWORD: example
+      - POSTGRES_DB_FILE=/run/secrets/db-name
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+      - POSTGRES_USER_FILE=/run/secrets/db-user
   
   adminer:
     image: adminer
@@ -26,3 +32,11 @@ services:
     depends_on:
       - db
       - fileservice
+
+secrets:
+  db-password:
+    file: ./tmp/db-password
+  db-name:
+    file: ./tmp/db-name
+  db-user:
+    file: ./tmp/db-user
