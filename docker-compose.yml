@@ -29,6 +29,8 @@ services:
   tgbot:
     build: .
     image: telegram-file-bot
+    ports:
+      - 2000:2000
     depends_on:
       - db
       - fileservice

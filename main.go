@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 
 	"github.com/catinapoke/go-microservice/fileservice"
 	"github.com/go-telegram/bot"
@@ -20,7 +21,7 @@ func GetEnvFromFile(path_env string) (string, error) {
 		return "", fmt.Errorf("can't retrieve env value %s - '%s': %w", path, path_env, err)
 	}
 
-	return string(data), nil
+	return strings.TrimRight(string(data), "\n"), nil
 }
 
 func main() {
