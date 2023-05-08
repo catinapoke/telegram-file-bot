@@ -12,11 +12,12 @@ import (
 	"github.com/go-telegram/bot/models"
 )
 
-func GetEnvFromFile(path string) (string, error) {
+func GetEnvFromFile(path_env string) (string, error) {
+	path := os.Getenv(path_env)
 	data, err := os.ReadFile(path)
 
 	if err != nil {
-		return "", fmt.Errorf("can't retrieve env value %s: %d", path, err)
+		return "", fmt.Errorf("can't retrieve env value %s - '%s': %w", path, path_env, err)
 	}
 
 	return string(data), nil
@@ -25,10 +26,9 @@ func GetEnvFromFile(path string) (string, error) {
 func main() {
 	fmt.Println("Hello world!")
 	controller := fileservice.CreateController("fileservice", "3001")
-	_, err := controller.Get(0)
-
-	if err != nil {
-		panic(fmt.Errorf("can't get zero file: %d", err))
+	file_path, _ := controller.Get(0)
+	if file_path != "omagad" { // Just don't want to remove fileservice dependency as I will use it later
+		panic(1)
 	}
 
 	token, err := GetEnvFromFile("BOT_TOKEN_FILE")
