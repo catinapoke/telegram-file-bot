@@ -32,6 +32,10 @@ services:
     depends_on:
       - db
       - fileservice
+    secrets:
+      - tg-bot-token
+    environment:
+      - BOT_TOKEN_FILE=/run/secrets/tg-bot-token
 
 secrets:
   db-password:
@@ -40,3 +44,5 @@ secrets:
     file: ./tmp/db-name
   db-user:
     file: ./tmp/db-user
+  tg-bot-token:
+    file: ./tmp/tg-bot-token

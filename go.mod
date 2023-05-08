@@ -7,4 +7,7 @@ require (
 	github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505162549-a47df0043a0e
 )
 
-require github.com/catinapoke/go-microservice/catfacts v0.0.0-20230505162549-a47df0043a0e // indirect
+require (
+	github.com/catinapoke/go-microservice/catfacts v0.0.0-20230505162549-a47df0043a0e // indirect
+	github.com/go-telegram/bot v0.7.8
+)

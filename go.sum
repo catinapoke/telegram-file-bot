@@ -8,3 +8,5 @@ github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505082809-68339e9f
 github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505082809-68339e9f82ff/go.mod h1:CNfJvVxzeYAoIM4VWaFg5NOzZWtBCFVBwNHd5UaaEPg=
 github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505162549-a47df0043a0e h1:PwAdqiyATYoziP0ygmqPv2qkiEn9BuPOawpHJ/KKIj8=
 github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505162549-a47df0043a0e/go.mod h1:CNfJvVxzeYAoIM4VWaFg5NOzZWtBCFVBwNHd5UaaEPg=
+github.com/go-telegram/bot v0.7.8 h1:odKGMoGoScwwzRpFtEUrtzQc++Gdl36tCJ553egtZAs=
+github.com/go-telegram/bot v0.7.8/go.mod h1:i2TRs7fXWIeaceF3z7KzsMt/he0TwkVC680mvdTFYeM=
