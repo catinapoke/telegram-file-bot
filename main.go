@@ -27,7 +27,7 @@ func main() {
 	fmt.Println("Hello world!")
 	controller := fileservice.CreateController("fileservice", "3001")
 	file_path, _ := controller.Get(0)
-	if file_path != "omagad" { // Just don't want to remove fileservice dependency as I will use it later
+	if file_path == "omagad" { // Just don't want to remove fileservice dependency as I will use it later
 		panic(1)
 	}
 
