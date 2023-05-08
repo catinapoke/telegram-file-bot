@@ -27,7 +27,7 @@ services:
       - 3001:3001
 
   tgbot:
-    build: github.com/catinapoke/telegram-file-bot.git
+    build: .
     image: telegram-file-bot
     depends_on:
       - db
