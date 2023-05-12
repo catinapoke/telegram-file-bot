@@ -36,8 +36,15 @@ services:
       - fileservice
     secrets:
       - tg-bot-token
+      - db-password
+      - db-name
+      - db-user
     environment:
       - BOT_TOKEN_FILE=/run/secrets/tg-bot-token
+      - DATABASE_URL=db
+      - POSTGRES_DB_FILE=/run/secrets/db-name
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+      - POSTGRES_USER_FILE=/run/secrets/db-user
 
 secrets:
   db-password:

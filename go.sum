@@ -8,5 +8,14 @@ github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505082809-68339e9f
 github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505082809-68339e9f82ff/go.mod h1:CNfJvVxzeYAoIM4VWaFg5NOzZWtBCFVBwNHd5UaaEPg=
 github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505162549-a47df0043a0e h1:PwAdqiyATYoziP0ygmqPv2qkiEn9BuPOawpHJ/KKIj8=
 github.com/catinapoke/go-microservice/fileservice v0.0.0-20230505162549-a47df0043a0e/go.mod h1:CNfJvVxzeYAoIM4VWaFg5NOzZWtBCFVBwNHd5UaaEPg=
+github.com/go-pg/pg v8.0.7+incompatible h1:ty/sXL1OZLo+47KK9N8llRcmbA9tZasqbQ/OO4ld53g=
+github.com/go-pg/pg v8.0.7+incompatible/go.mod h1:a2oXow+aFOrvwcKs3eIA0lNFmMilrxK2sOkB5NWe0vA=
 github.com/go-telegram/bot v0.7.8 h1:odKGMoGoScwwzRpFtEUrtzQc++Gdl36tCJ553egtZAs=
 github.com/go-telegram/bot v0.7.8/go.mod h1:i2TRs7fXWIeaceF3z7KzsMt/he0TwkVC680mvdTFYeM=
+github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
+github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkryuEj+Srlc=
+golang.org/x/crypto v0.0.0-20190320223903-b7391e95e576 h1:aUX/1G2gFSs4AsJJg2cL3HuoRhCSCz733FE5GUSuaT4=
+golang.org/x/crypto v0.0.0-20190320223903-b7391e95e576/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
+golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+mellium.im/sasl v0.3.1 h1:wE0LW6g7U83vhvxjC1IY8DnXM+EU095yeo8XClvCdfo=
+mellium.im/sasl v0.3.1/go.mod h1:xm59PUYpZHhgQ9ZqoJ5QaCqzWMi8IeS49dhp6plPCzw=

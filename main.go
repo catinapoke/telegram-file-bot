@@ -6,23 +6,14 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"strings"
+	"time"
 
 	"github.com/catinapoke/go-microservice/fileservice"
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
 )
 
-func GetEnvFromFile(path_env string) (string, error) {
-	path := os.Getenv(path_env)
-	data, err := os.ReadFile(path)
-
-	if err != nil {
-		return "", fmt.Errorf("can't retrieve env value %s - '%s': %w", path, path_env, err)
-	}
-
-	return strings.TrimRight(string(data), "\n"), nil
-}
+var database DatabaseOperator
 
 func main() {
 	fmt.Println("Hello world!")
@@ -37,6 +28,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	err = database.Start()
+	if err != nil {
+		panic(err)
+	}
+	defer database.Close()
 
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
@@ -62,4 +59,47 @@ func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		ChatID: update.Message.Chat.ID,
 		Text:   update.Message.Text,
 	})
+
+	if update.Message.Text == "/start" {
+		start(ctx, b, update)
+	}
+}
+
+func start(ctx context.Context, b *bot.Bot, update *models.Update) {
+
+	userData := update.ChatMember.From
+	user_row := Users{
+		Id:           userData.ID,
+		FirstName:    userData.FirstName,
+		LastName:     userData.LastName,
+		LanguageCode: userData.LanguageCode,
+		Username:     userData.Username,
+		StartUsage:   time.Now(),
+	}
+
+	err := database.CreateUser(&user_row)
+	if err != nil {
+		b.SendMessage(ctx, &bot.SendMessageParams{
+			ChatID: update.Message.Chat.ID,
+			Text:   "Got error with creating user, please write to support!",
+		})
+
+		fmt.Printf("Got error: %w\n", err)
+	}
+}
+
+func load(userId int64, telegramFileId string) {
+
+}
+
+func get(userId int64, fileId string) {
+
+}
+
+func delete(userId int64, fileId string) {
+
+}
+
+func list(userid int64) {
+
 }
