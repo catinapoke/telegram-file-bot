@@ -73,7 +73,7 @@ func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
 
 func start(ctx context.Context, b *bot.Bot, update *models.Update) {
 
-	userData := update.ChatMember.From
+	userData := update.Message.From
 	user_row := Users{
 		Id:           userData.ID,
 		FirstName:    userData.FirstName,
