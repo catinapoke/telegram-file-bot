@@ -59,6 +59,8 @@ func (op *DatabaseOperator) Start() error {
 		Password: password,
 		Database: db,
 	})
+
+	return nil
 }
 
 func (op *DatabaseOperator) Close() {
@@ -91,7 +93,7 @@ func (op *DatabaseOperator) GetFiles(user int64) ([]Filenames, error) {
 		err = NewDatabaseError("GetFiles", err)
 	}
 
-	return files, nil
+	return files, err
 }
 
 func (op *DatabaseOperator) DeleteFile(name string) error {

@@ -49,9 +49,15 @@ func main() {
 	}
 	// call methods.SetWebhook if needed
 
-	go b.StartWebhook(ctx)
-
-	http.ListenAndServe(":2000", b.WebhookHandler())
+	mode := os.Getenv("LISTEN_MODE")
+	if mode == "requests" {
+		b.Start(ctx)
+	} else if mode == "webhook" {
+		go b.StartWebhook(ctx)
+		http.ListenAndServe(":2000", b.WebhookHandler())
+	} else {
+		panic(fmt.Errorf("can't define listen mode"))
+	}
 }
 
 func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
@@ -84,7 +90,7 @@ func start(ctx context.Context, b *bot.Bot, update *models.Update) {
 			Text:   "Got error with creating user, please write to support!",
 		})
 
-		fmt.Printf("Got error: %w\n", err)
+		fmt.Printf("Got error: %v\n", err)
 	}
 }
 

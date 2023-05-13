@@ -4,7 +4,7 @@ import "fmt"
 
 func NewDatabaseError(text string, err error) error {
 	if err != nil {
-		return fmt.Errorf("Database error: %s - %w", DatabaseError{Message: text}, err)
+		return fmt.Errorf("database error: %s - %w", DatabaseError{Message: text}, err)
 	}
 	return &DatabaseError{Message: text}
 }

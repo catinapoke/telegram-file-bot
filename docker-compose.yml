@@ -42,6 +42,7 @@ services:
     environment:
       - BOT_TOKEN_FILE=/run/secrets/tg-bot-token
       - DATABASE_URL=db
+      - LISTEN_MODE=requests
       - POSTGRES_DB_FILE=/run/secrets/db-name
       - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
       - POSTGRES_USER_FILE=/run/secrets/db-user
