@@ -6,32 +6,19 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"time"
 
-	"github.com/catinapoke/go-microservice/fileservice"
 	"github.com/catinapoke/telegram-file-bot/common"
 	"github.com/catinapoke/telegram-file-bot/database"
+	"github.com/catinapoke/telegram-file-bot/handler"
 	"github.com/go-telegram/bot"
-	"github.com/go-telegram/bot/models"
 )
 
-var db database.DatabaseOperator
-
 func main() {
-	fmt.Println("Hello world!")
-	controller := fileservice.CreateController("fileservice", "3001")
-	file_path, _ := controller.Get(0)
-	if file_path == "omagad" { // Just don't want to remove fileservice dependency as I will use it later
-		panic(1)
-	}
+	fmt.Println("Starting bot!")
 
-	token, err := common.GetEnvFromFile("BOT_TOKEN_FILE")
-
-	if err != nil {
-		panic(err)
-	}
-
-	err = db.Start()
+	// Database
+	var db database.DatabaseOperator
+	err := db.Start()
 	if err != nil {
 		panic(err)
 	}
@@ -40,8 +27,17 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
+	// Bot
+	token, err := common.GetEnvFromFile("BOT_TOKEN_FILE")
+
+	if err != nil {
+		panic(err)
+	}
+
+	botHandler := handler.NewBotHandler(db)
+
 	opts := []bot.Option{
-		bot.WithDefaultHandler(handler),
+		bot.WithDefaultHandler(botHandler.Handle),
 	}
 
 	b, err := bot.New(token, opts...)
@@ -49,8 +45,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// call methods.SetWebhook if needed
 
+	// Start
 	mode := os.Getenv("LISTEN_MODE")
 	if mode == "requests" {
 		b.Start(ctx)
@@ -60,54 +56,4 @@ func main() {
 	} else {
 		panic(fmt.Errorf("can't define listen mode"))
 	}
-}
-
-func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
-	b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID: update.Message.Chat.ID,
-		Text:   update.Message.Text,
-	})
-
-	if update.Message.Text == "/start" {
-		start(ctx, b, update)
-	}
-}
-
-func start(ctx context.Context, b *bot.Bot, update *models.Update) {
-
-	userData := update.Message.From
-	user_row := database.User{
-		Id:           userData.ID,
-		FirstName:    userData.FirstName,
-		LastName:     userData.LastName,
-		LanguageCode: userData.LanguageCode,
-		Username:     userData.Username,
-		StartUsage:   time.Now(),
-	}
-
-	err := db.CreateUser(user_row)
-	if err != nil {
-		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID: update.Message.Chat.ID,
-			Text:   "Got error with creating user, please write to support!",
-		})
-
-		fmt.Printf("Got error: %v\n", err)
-	}
-}
-
-func load(userId int64, telegramFileId string) {
-
-}
-
-func get(userId int64, fileId string) {
-
-}
-
-func delete(userId int64, fileId string) {
-
-}
-
-func list(userid int64) {
-
 }
