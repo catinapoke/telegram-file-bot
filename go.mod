@@ -17,4 +17,5 @@ require (
 	github.com/catinapoke/go-microservice/catfacts v0.0.0-20230505162549-a47df0043a0e // indirect
 	github.com/go-pg/pg v8.0.7+incompatible
 	github.com/go-telegram/bot v0.7.8
+	github.com/lib/pq v1.10.9
 )

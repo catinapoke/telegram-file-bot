@@ -9,11 +9,13 @@ import (
 	"time"
 
 	"github.com/catinapoke/go-microservice/fileservice"
+	"github.com/catinapoke/telegram-file-bot/common"
+	"github.com/catinapoke/telegram-file-bot/database"
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
 )
 
-var database DatabaseOperator
+var db database.DatabaseOperator
 
 func main() {
 	fmt.Println("Hello world!")
@@ -23,17 +25,17 @@ func main() {
 		panic(1)
 	}
 
-	token, err := GetEnvFromFile("BOT_TOKEN_FILE")
+	token, err := common.GetEnvFromFile("BOT_TOKEN_FILE")
 
 	if err != nil {
 		panic(err)
 	}
 
-	err = database.Start()
+	err = db.Start()
 	if err != nil {
 		panic(err)
 	}
-	defer database.Close()
+	defer db.Close()
 
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
@@ -74,7 +76,7 @@ func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
 func start(ctx context.Context, b *bot.Bot, update *models.Update) {
 
 	userData := update.Message.From
-	user_row := Users{
+	user_row := database.User{
 		Id:           userData.ID,
 		FirstName:    userData.FirstName,
 		LastName:     userData.LastName,
@@ -83,7 +85,7 @@ func start(ctx context.Context, b *bot.Bot, update *models.Update) {
 		StartUsage:   time.Now(),
 	}
 
-	err := database.CreateUser(&user_row)
+	err := db.CreateUser(user_row)
 	if err != nil {
 		b.SendMessage(ctx, &bot.SendMessageParams{
 			ChatID: update.Message.Chat.ID,
