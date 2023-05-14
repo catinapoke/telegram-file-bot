@@ -11,7 +11,9 @@ services:
       - POSTGRES_DB_FILE=/run/secrets/db-name
       - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
       - POSTGRES_USER_FILE=/run/secrets/db-user
-  
+    volumes:
+      - database:/var/lib/postgresql/data
+
   adminer:
     image: adminer
     restart: always
@@ -56,3 +58,7 @@ secrets:
     file: ./tmp/db-user
   tg-bot-token:
     file: ./tmp/tg-bot-token
+
+volumes:
+  database:
+    name: "database-volume"
