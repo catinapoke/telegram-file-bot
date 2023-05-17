@@ -1,6 +1,6 @@
-github.com/catinapoke/go-microservice/fileservice v0.0.0-20230515083131-edd6b90a2a2e h1:M5GzyOr0D7J1RZN0uVCuXibga5y7XhOJZgoxIhtbnEw=
-github.com/catinapoke/go-microservice/fileservice v0.0.0-20230515083131-edd6b90a2a2e/go.mod h1:CNfJvVxzeYAoIM4VWaFg5NOzZWtBCFVBwNHd5UaaEPg=
-github.com/go-telegram/bot v0.7.8 h1:odKGMoGoScwwzRpFtEUrtzQc++Gdl36tCJ553egtZAs=
-github.com/go-telegram/bot v0.7.8/go.mod h1:i2TRs7fXWIeaceF3z7KzsMt/he0TwkVC680mvdTFYeM=
+github.com/catinapoke/go-microservice/fileservice v0.0.0-20230517112021-56320f639882 h1:hMsTl+JlKyE/oI1x2A5uFlQStqex++yNb8R9q7HkNls=
+github.com/catinapoke/go-microservice/fileservice v0.0.0-20230517112021-56320f639882/go.mod h1:CNfJvVxzeYAoIM4VWaFg5NOzZWtBCFVBwNHd5UaaEPg=
+github.com/go-telegram/bot v0.7.9 h1:NyUHX77i/EAgr73ie2Yy3q9yjHfA1YENgosbQlfP27s=
+github.com/go-telegram/bot v0.7.9/go.mod h1:i2TRs7fXWIeaceF3z7KzsMt/he0TwkVC680mvdTFYeM=
 github.com/lib/pq v1.10.9 h1:YXG7RB+JIjhP29X+OtkiDnYaXQwpS4JEWq7dtCCRUEw=
 github.com/lib/pq v1.10.9/go.mod h1:AlVN5x4E4T544tWzH6hKfbfQvm3HdbOxrmggDNAPY9o=

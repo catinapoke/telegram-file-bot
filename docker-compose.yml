@@ -25,8 +25,12 @@ services:
   fileservice:
     build: https://github.com/catinapoke/go-microservice.git
     image: go-microservice
+    environment:
+      - FILESERVICE_PATH=/var/fileservice/data
     ports:
       - 3001:3001
+    volumes:
+      - storage:/var/fileservice/data
 
   tgbot:
     build: .
@@ -44,6 +48,7 @@ services:
     environment:
       - BOT_TOKEN_FILE=/run/secrets/tg-bot-token
       - DATABASE_URL=db:5432
+      - FILESERVICE_URL=fileservice:3001
       - LISTEN_MODE=requests
       - POSTGRES_DB_FILE=/run/secrets/db-name
       - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
@@ -62,3 +67,5 @@ secrets:
 volumes:
   database:
     name: "database-volume"
+  storage:
+    name: "fileservice-storage"

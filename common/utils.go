@@ -2,6 +2,7 @@ package common
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
 )
@@ -24,4 +25,15 @@ func GetEnv(name string) (string, error) {
 	}
 
 	return data, nil
+}
+
+func GenerateRandomString(length int) string {
+	data := "abcdefghijklmnopqrstuvwxyz01234567890$#@&/*-+"
+	builder := strings.Builder{}
+	builder.Grow(length)
+	for i := 0; i < length; i++ {
+		builder.WriteByte(data[rand.Intn(len(data))])
+	}
+
+	return builder.String()
 }

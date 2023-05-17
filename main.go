@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/catinapoke/go-microservice/fileservice"
 	"github.com/catinapoke/telegram-file-bot/common"
 	"github.com/catinapoke/telegram-file-bot/database"
 	"github.com/catinapoke/telegram-file-bot/handler"
@@ -24,8 +25,13 @@ func main() {
 	}
 	defer db.Close()
 
-	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
-	defer cancel()
+	// FileService
+	fileserviceUrl := os.Getenv("FILESERVICE_URL")
+	if fileserviceUrl == "" {
+		fileserviceUrl = "http://127.0.0.1:3001"
+	}
+
+	service := fileservice.CreateControllerByUrl(fileserviceUrl)
 
 	// Bot
 	token, err := common.GetEnvFromFile("BOT_TOKEN_FILE")
@@ -34,7 +40,7 @@ func main() {
 		panic(err)
 	}
 
-	botHandler := handler.NewBotHandler(db)
+	botHandler := handler.NewBotHandler(db, service)
 
 	opts := []bot.Option{
 		bot.WithDefaultHandler(botHandler.Handle),
@@ -47,6 +53,9 @@ func main() {
 	}
 
 	// Start
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
+
 	mode := os.Getenv("LISTEN_MODE")
 	if mode == "requests" {
 		b.Start(ctx)

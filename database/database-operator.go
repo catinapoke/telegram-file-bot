@@ -108,7 +108,7 @@ func (op *DatabaseOperator) CreateFile(file FileName) error {
 		return errNotInitialized()
 	}
 
-	var err error = nil //_, err := op.db.Model(file).Insert()
+	var err error = op.insertFile(file)
 
 	if err != nil {
 		err = common.NewDatabaseError("CreateFile", err)
@@ -153,6 +153,20 @@ func (op *DatabaseOperator) insertUser(user User) error {
 		return fmt.Errorf("insertUser: affected users: %w", err)
 	}
 	log.Printf("affected = %d\n", rowCnt)
+	return nil
+}
+
+func (op *DatabaseOperator) insertFile(file FileName) error {
+	stmt, err := op.db.Prepare(`INSERT INTO telegramfilebot.filenames (name, id, share, owner) VALUES ($1, $2, $3, $4)`)
+	if err != nil {
+		return fmt.Errorf("insertUser: Prepare: %w", err)
+	}
+
+	_, err = stmt.Exec(file.Name, file.Id, file.Share, file.Owner)
+	if err != nil {
+		return fmt.Errorf("insertUser: Exec: %w", err)
+	}
+
 	return nil
 }
 
