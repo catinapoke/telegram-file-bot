@@ -6,7 +6,7 @@ import (
 
 	"database/sql"
 
-	"github.com/catinapoke/telegram-file-bot/common"
+	"github.com/catinapoke/telegram-file-bot/internal/common"
 	_ "github.com/lib/pq"
 )
 

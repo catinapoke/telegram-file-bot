@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/catinapoke/go-microservice/fileservice"
-	"github.com/catinapoke/telegram-file-bot/common"
-	"github.com/catinapoke/telegram-file-bot/database"
+	"github.com/catinapoke/telegram-file-bot/internal/common"
+	"github.com/catinapoke/telegram-file-bot/internal/database"
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
 )
@@ -79,9 +79,15 @@ func (hndl *BotHandler) load(ctx context.Context, b *bot.Bot, update *models.Upd
 	}
 
 	filename := common.GenerateRandomString(24)
-	file = database.FileName{}
+	fileRecord := database.FileName{
+		Name:  filename,
+		Id:    id,
+		Share: 0,
+		Owner: userId,
+	}
 
-	hndl.db.CreateFile()
+	err = hndl.db.CreateFile(fileRecord)
+	return err
 }
 
 func (hndl *BotHandler) get(userId int64, fileId string) {
