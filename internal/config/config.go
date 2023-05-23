@@ -19,6 +19,10 @@ type AppConfig struct {
 	}
 }
 
+const (
+	DefaultFileserviceUrl = "http://127.0.0.1:3001"
+)
+
 var Config = AppConfig{}
 
 func LoadConfig() error {
@@ -35,7 +39,7 @@ func LoadConfig() error {
 
 	fileserviceUrl := os.Getenv("FILESERVICE_URL")
 	if fileserviceUrl == "" {
-		fileserviceUrl = "http://127.0.0.1:3001"
+		fileserviceUrl = DefaultFileserviceUrl
 	}
 	config.FileServiceUrl = fileserviceUrl
 

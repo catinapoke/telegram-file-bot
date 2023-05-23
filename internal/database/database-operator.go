@@ -7,6 +7,7 @@ import (
 	"database/sql"
 
 	"github.com/catinapoke/telegram-file-bot/internal/common"
+	"github.com/catinapoke/telegram-file-bot/internal/config"
 	_ "github.com/lib/pq"
 )
 
@@ -15,26 +16,13 @@ type DatabaseOperator struct {
 }
 
 func (op *DatabaseOperator) Start() error {
+	var err error
+
 	// Enviroment varaiables
-	addr, err := common.GetEnv("DATABASE_URL")
-	if err != nil {
-		return common.NewDatabaseError("can't get address of database!", err)
-	}
-
-	user, err := common.GetEnvFromFile("POSTGRES_USER_FILE")
-	if err != nil {
-		return common.NewDatabaseError("can't get useruser of database!", err)
-	}
-
-	password, err := common.GetEnvFromFile("POSTGRES_PASSWORD_FILE")
-	if err != nil {
-		return common.NewDatabaseError("can't get password of database!", err)
-	}
-
-	db, err := common.GetEnvFromFile("POSTGRES_DB_FILE")
-	if err != nil {
-		return common.NewDatabaseError("can't get database name!", err)
-	}
+	addr := config.Config.Database.Url
+	user := config.Config.Database.Username
+	password := config.Config.Database.Password
+	db := config.Config.Database.Name
 
 	// Connect
 	url := fmt.Sprintf("postgres://%s:%s@%s/%v?sslmode=disable", user, password, addr, db)

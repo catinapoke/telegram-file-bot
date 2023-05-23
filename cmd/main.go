@@ -15,6 +15,10 @@ import (
 	"github.com/go-telegram/bot"
 )
 
+const (
+	WebhookUrl = ":2000"
+)
+
 func main() {
 	fmt.Println("Starting bot!")
 
@@ -55,7 +59,7 @@ func main() {
 		b.Start(ctx)
 	case "webhook":
 		go b.StartWebhook(ctx)
-		http.ListenAndServe(":2000", b.WebhookHandler())
+		http.ListenAndServe(WebhookUrl, b.WebhookHandler())
 	default:
 		log.Fatalln(fmt.Errorf("can't define listen mode"))
 	}

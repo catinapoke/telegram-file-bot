@@ -12,6 +12,10 @@ import (
 	"github.com/go-telegram/bot/models"
 )
 
+const (
+	StartMessage = "/start"
+)
+
 type BotHandler struct {
 	db    database.DatabaseOperator
 	files fileservice.FileServiceController
@@ -25,31 +29,37 @@ func NewBotHandler(db database.DatabaseOperator, service fileservice.FileService
 	}
 }
 
-func (hndl *BotHandler) Handle(ctx context.Context, b *bot.Bot, update *models.Update) {
-
+func (bh *BotHandler) Handle(ctx context.Context, b *bot.Bot, update *models.Update) {
 	var err error
-	if update.Message.Text == "/start" {
-		err = hndl.start(ctx, b, update)
-	} else if update.Message.Document != nil {
-		err = hndl.load(ctx, b, update)
-	} else {
-		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID: update.Message.Chat.ID,
-			Text:   update.Message.Text,
-		})
+
+	defer func() {
+		if err != nil { // TODO: Use errors.Is and write right errors output
+			b.SendMessage(ctx, &bot.SendMessageParams{
+				ChatID: update.Message.Chat.ID,
+				Text:   "Got error while doing request, please write to support!",
+			})
+
+			fmt.Printf("Got error: %v\n", err)
+		}
+	}()
+
+	if update.Message.Text == StartMessage {
+		err = bh.start(ctx, b, update)
+		return
 	}
 
-	if err != nil { // TODO: Use errors.Is and write right errors output
-		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID: update.Message.Chat.ID,
-			Text:   "Got error while doing request, please write to support!",
-		})
-
-		fmt.Printf("Got error: %v\n", err)
+	if update.Message.Document != nil {
+		err = bh.load(ctx, b, update)
+		return
 	}
+
+	b.SendMessage(ctx, &bot.SendMessageParams{
+		ChatID: update.Message.Chat.ID,
+		Text:   update.Message.Text,
+	})
 }
 
-func (hndl *BotHandler) start(ctx context.Context, b *bot.Bot, update *models.Update) error {
+func (bh *BotHandler) start(ctx context.Context, b *bot.Bot, update *models.Update) error {
 	userData := update.Message.From
 	user_row := database.User{
 		Id:           userData.ID,
@@ -60,10 +70,10 @@ func (hndl *BotHandler) start(ctx context.Context, b *bot.Bot, update *models.Up
 		StartUsage:   time.Now(),
 	}
 
-	return hndl.db.CreateUser(user_row)
+	return bh.db.CreateUser(user_row)
 }
 
-func (hndl *BotHandler) load(ctx context.Context, b *bot.Bot, update *models.Update) error {
+func (bh *BotHandler) load(ctx context.Context, b *bot.Bot, update *models.Update) error {
 	userId := update.Message.From.ID
 	document := update.Message.Document
 	file, err := b.GetFile(ctx, &bot.GetFileParams{FileID: document.FileID})
@@ -72,7 +82,7 @@ func (hndl *BotHandler) load(ctx context.Context, b *bot.Bot, update *models.Upd
 		return err
 	}
 
-	id, err := hndl.files.Set(file.FilePath)
+	id, err := bh.files.Set(file.FilePath)
 
 	if err != nil {
 		return err
@@ -86,17 +96,11 @@ func (hndl *BotHandler) load(ctx context.Context, b *bot.Bot, update *models.Upd
 		Owner: userId,
 	}
 
-	err = hndl.db.CreateFile(fileRecord)
+	err = bh.db.CreateFile(fileRecord)
 	return err
 }
 
-func (hndl *BotHandler) get(userId int64, fileId string) {
-	controller := fileservice.CreateController("fileservice", "3001")
-	file_path, _ := controller.Get(0)
-	if file_path == "omagad" { // Just don't want to remove fileservice dependency as I will use it later
-		panic(1)
-	}
-
+func (bh *BotHandler) get(userId int64, fileId string) {
 	/*
 		// file id of uploaded image
 		inputFileData := "AgACAgIAAxkDAAIBOWJimnCJHQJiJ4P3aasQCPNyo6mlAALDuzEbcD0YSxzjB-vmkZ6BAQADAgADbQADJAQ"
@@ -120,10 +124,10 @@ func (hndl *BotHandler) get(userId int64, fileId string) {
 		bot.SendPhoto(ctx, params)*/
 }
 
-func (hndl *BotHandler) delete(userId int64, fileId string) {
+func (bh *BotHandler) delete(userId int64, fileId string) {
 
 }
 
-func (hndl *BotHandler) list(userid int64) {
+func (bh *BotHandler) list(userid int64) {
 
 }
